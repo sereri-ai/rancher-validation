@@ -5,6 +5,7 @@ import tempfile
 import time
 import subprocess
 from yaml import load
+import yaml
 
 
 logging.getLogger('invoke').setLevel(logging.WARNING)
@@ -80,7 +81,7 @@ class RKEClient(object):
 
     @staticmethod
     def convert_to_dict(yml_contents):
-        return load(yml_contents)
+        return load(yml_contents, Loader=yaml.SafeLoader)
 
     def update_nodes(self, yml_contents, nodes):
         """
