@@ -5,7 +5,6 @@ import tempfile
 import time
 import subprocess
 from yaml import load
-import yaml
 
 
 logging.getLogger('invoke').setLevel(logging.WARNING)
@@ -73,15 +72,15 @@ class RKEClient(object):
             render_dict.update(node_dict)
             node_index += 1
         yml_contents = jinja2.Environment(
-            loader=jinja2.FileSystemLoader(self.template_path)
-        ).get_template(template).render(render_dict)
+            loader=jinja2.FileSystemLoader(self.template_path), 
+        autoescape=True).get_template(template).render(render_dict)
         print("Generated cluster.yml contents:\n", yml_contents)
         nodes = self.update_nodes(yml_contents, nodes)
         return yml_contents, nodes
 
     @staticmethod
     def convert_to_dict(yml_contents):
-        return load(yml_contents, Loader=yaml.SafeLoader)
+        return load(yml_contents)
 
     def update_nodes(self, yml_contents, nodes):
         """
