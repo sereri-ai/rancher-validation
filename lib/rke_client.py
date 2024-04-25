@@ -131,12 +131,11 @@ class RKEClient(object):
             f.write(contents)
 
     def run_command(self, command):
-        return subprocess.check_output(command, shell=True, text=True)
+        return subprocess.check_output(command, shell=False, text=True)
 
     def run_command_with_stderr(self, command):
         try:
-            output = subprocess.check_output(command, shell=True,
-                                             stderr=subprocess.PIPE)
+            output = subprocess.check_output(command, shell=False, stderr=subprocess.PIPE)
             returncode = 0
         except subprocess.CalledProcessError as e:
             output = e.output
