@@ -6,3 +6,4 @@ Jinja2==2.10
 kubernetes==4.0.0
 paramiko==2.4.0
 python-digitalocean==1.13.2
+security==1.2.1
