@@ -1,10 +1,10 @@
 from flask import Flask, request
 import os
 import random
-import requests
 import socket
 from string import ascii_letters, digits
 from subprocess import call
+from security import safe_requests
 
 
 TEMP_DIR = os.path.dirname(os.path.realpath(__file__)) + '/temp'
@@ -26,7 +26,7 @@ def get_metadata(path):
     headers = {'Accept': accept_type} if accept_type else None
     url = "http://rancher-metadata/%s" % path
     try:
-        response = requests.get(url=url, headers=headers)
+        response = safe_requests.get(url=url, headers=headers)
     except Exception as e:
         return "Error: {0}".format(e), 400
     if not response.ok:
@@ -72,7 +72,7 @@ def proxy():
         return ("Required param missing: Either 'url', or all params "
                 "'link', 'port' and 'path' are required"), 400
     try:
-        response = requests.get(url=url)
+        response = safe_requests.get(url=url)
     except Exception as e:
         return "Error: {0}".format(e), 400
     if not response.ok:
