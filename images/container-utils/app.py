@@ -26,7 +26,7 @@ def get_metadata(path):
     headers = {'Accept': accept_type} if accept_type else None
     url = "http://rancher-metadata/%s" % path
     try:
-        response = requests.get(url=url, headers=headers)
+        response = requests.get(url=url, headers=headers, timeout=60)
     except Exception as e:
         return "Error: {0}".format(e), 400
     if not response.ok:
@@ -72,7 +72,7 @@ def proxy():
         return ("Required param missing: Either 'url', or all params "
                 "'link', 'port' and 'path' are required"), 400
     try:
-        response = requests.get(url=url)
+        response = requests.get(url=url, timeout=60)
     except Exception as e:
         return "Error: {0}".format(e), 400
     if not response.ok:
