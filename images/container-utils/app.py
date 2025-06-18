@@ -1,10 +1,10 @@
 from flask import Flask, request
 import os
-import random
 import requests
 import socket
 from string import ascii_letters, digits
 from subprocess import call
+import secrets
 
 
 TEMP_DIR = os.path.dirname(os.path.realpath(__file__)) + '/temp'
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 
 def generate_random_file_name():
-    name = ''.join(random.choice(ascii_letters + digits) for _ in list(range(35)))
+    name = ''.join(secrets.choice(ascii_letters + digits) for _ in list(range(35)))
     return "{0}/{1}.txt".format(TEMP_DIR, name)
 
 
